@@ -1,0 +1,7 @@
+{
+  "name": "SkyNet - Premium Flight Search",
+  "description": "A modern flight booking platform featuring seamless search simulations, interactive seat maps, and personalized travel management.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
