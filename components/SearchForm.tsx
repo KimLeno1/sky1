@@ -80,110 +80,108 @@ export const SearchForm: React.FC<SearchFormProps> = ({ params, setParams, onSea
   };
 
   return (
-    <div className="bg-white p-8 rounded-[32px] shadow-2xl border border-slate-100 max-w-6xl mx-auto -mt-24 relative z-20">
-      <div className="flex flex-wrap gap-4 mb-8 border-b border-slate-50 pb-6">
+    <div className="bg-white p-5 md:p-8 rounded-[24px] md:rounded-[32px] shadow-xl border border-slate-100 max-w-6xl mx-auto -mt-16 md:-mt-24 relative z-20 mx-4 md:mx-auto">
+      <div className="flex flex-wrap gap-2 md:gap-4 mb-6 md:mb-8 border-b border-slate-50 pb-4 md:pb-6">
         <button 
           type="button"
           onClick={() => handleTripTypeChange('ROUND_TRIP')}
-          className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${params.tripType === 'ROUND_TRIP' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-slate-900'}`}
+          className={`flex-1 md:flex-none px-4 md:px-6 py-2 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all ${params.tripType === 'ROUND_TRIP' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-slate-900'}`}
         >
           Round Trip
         </button>
         <button 
           type="button"
           onClick={() => handleTripTypeChange('ONE_WAY')}
-          className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${params.tripType === 'ONE_WAY' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-slate-900'}`}
+          className={`flex-1 md:flex-none px-4 md:px-6 py-2 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all ${params.tripType === 'ONE_WAY' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-slate-900'}`}
         >
           One-way
         </button>
         <button 
           type="button"
           onClick={() => handleTripTypeChange('MULTI_CITY')}
-          className={`px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${params.tripType === 'MULTI_CITY' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-slate-900'}`}
+          className={`flex-1 md:flex-none px-4 md:px-6 py-2 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all ${params.tripType === 'MULTI_CITY' ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-slate-900'}`}
         >
           Multi-city
         </button>
       </div>
 
-      <form onSubmit={onSearch} className="space-y-6">
+      <form onSubmit={onSearch} className="space-y-4 md:space-y-6">
         {params.tripType === 'MULTI_CITY' ? (
           <div className="space-y-4">
             {params.multiCityLegs?.map((leg, idx) => (
-              <div key={idx} className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end animate-in fade-in slide-in-from-top-2">
-                <div className="md:col-span-1 flex items-center justify-center">
-                   <div className="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center font-black text-xs">
+              <div key={idx} className="grid grid-cols-1 md:grid-cols-12 gap-3 items-end p-4 bg-slate-50 md:bg-transparent rounded-2xl md:rounded-none">
+                <div className="md:col-span-1 flex items-center justify-start md:justify-center">
+                   <div className="w-6 h-6 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px]">
                      {idx + 1}
                    </div>
                 </div>
-                <div className="md:col-span-3 space-y-2 text-left">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">From</label>
+                <div className="md:col-span-3 space-y-1.5">
+                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">From</label>
                   <select 
-                    className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none font-bold text-slate-800"
+                    className="w-full bg-white md:bg-slate-50 border border-slate-200 p-3 rounded-xl outline-none font-bold text-slate-800 text-sm"
                     value={leg.origin}
                     onChange={e => updateLeg(idx, 'origin', e.target.value)}
                   >
                     {validOrigins.map(a => <option key={a.code} value={a.code}>{a.city} ({a.code})</option>)}
                   </select>
                 </div>
-                <div className="md:col-span-3 space-y-2 text-left">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">To</label>
+                <div className="md:col-span-3 space-y-1.5">
+                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">To</label>
                   <select 
-                    className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none font-bold text-slate-800"
+                    className="w-full bg-white md:bg-slate-50 border border-slate-200 p-3 rounded-xl outline-none font-bold text-slate-800 text-sm"
                     value={leg.destination}
                     onChange={e => updateLeg(idx, 'destination', e.target.value)}
                   >
                     {validDestinations.map(a => <option key={a.code} value={a.code}>{a.city} ({a.code})</option>)}
                   </select>
                 </div>
-                <div className="md:col-span-3 space-y-2 text-left">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Date</label>
+                <div className="md:col-span-3 space-y-1.5">
+                  <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Date</label>
                   <input 
                     type="date"
-                    className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none font-bold text-slate-800"
+                    className="w-full bg-white md:bg-slate-50 border border-slate-200 p-3 rounded-xl outline-none font-bold text-slate-800 text-sm"
                     value={leg.date}
                     onChange={e => updateLeg(idx, 'date', e.target.value)}
                   />
                 </div>
-                <div className="md:col-span-2 flex gap-2">
+                <div className="md:col-span-2">
                   {params.multiCityLegs!.length > 2 && (
-                    <Button 
+                    <button 
                       type="button" 
-                      variant="ghost" 
                       onClick={() => removeLeg(idx)} 
-                      className="text-red-500 p-4 h-[58px]"
+                      className="text-red-500 text-[10px] font-black uppercase p-2"
                     >
-                      ✕
-                    </Button>
+                      REMOVE
+                    </button>
                   )}
                 </div>
               </div>
             ))}
-            <div className="flex justify-between items-center pt-4">
-              <Button type="button" variant="outline" onClick={addLeg} disabled={params.multiCityLegs!.length >= 5}>
-                + ADD ANOTHER FLIGHT
+            <div className="flex flex-col md:flex-row justify-between items-center pt-4 gap-4">
+              <Button type="button" variant="outline" size="sm" onClick={addLeg} disabled={params.multiCityLegs!.length >= 5} className="w-full md:w-auto">
+                + ADD LEG
               </Button>
-              <div className="flex gap-4">
-                 <div className="space-y-1">
-                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Passengers</label>
+              <div className="flex items-center gap-4 w-full md:w-auto">
+                 <div className="flex-1 md:flex-none">
                     <input 
                       type="number" 
-                      className="w-20 bg-slate-50 border border-slate-200 p-3 rounded-xl font-bold"
+                      className="w-full md:w-20 bg-slate-50 border border-slate-200 p-3 rounded-xl font-bold"
                       value={params.passengers}
                       onChange={e => setParams({...params, passengers: parseInt(e.target.value) || 1})}
                     />
                  </div>
-                 <Button type="submit" size="xl" className="px-16">
-                    SEARCH ALL LEGS
+                 <Button type="submit" size="lg" className="flex-1 md:flex-none">
+                    SEARCH ALL
                  </Button>
               </div>
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4 items-end">
-            <div className="space-y-2 text-left lg:col-span-1">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">From</label>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-4 items-end">
+            <div className="space-y-1.5 lg:col-span-1">
+              <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Origin</label>
               <select 
-                className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none font-bold text-slate-800 focus:ring-2 focus:ring-blue-500 appearance-none transition-all"
+                className="w-full bg-slate-50 border border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl outline-none font-bold text-slate-800 text-sm focus:ring-2 focus:ring-blue-500"
                 value={params.origin}
                 onChange={e => setParams({...params, origin: e.target.value})}
               >
@@ -191,10 +189,10 @@ export const SearchForm: React.FC<SearchFormProps> = ({ params, setParams, onSea
               </select>
             </div>
 
-            <div className="space-y-2 text-left lg:col-span-1">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">To</label>
+            <div className="space-y-1.5 lg:col-span-1">
+              <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Destination</label>
               <select 
-                className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none font-bold text-slate-800 focus:ring-2 focus:ring-blue-500 appearance-none transition-all"
+                className="w-full bg-slate-50 border border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl outline-none font-bold text-slate-800 text-sm focus:ring-2 focus:ring-blue-500"
                 value={params.destination}
                 onChange={e => setParams({...params, destination: e.target.value})}
               >
@@ -206,11 +204,11 @@ export const SearchForm: React.FC<SearchFormProps> = ({ params, setParams, onSea
               </select>
             </div>
 
-            <div className="space-y-2 text-left lg:col-span-1">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Departure</label>
+            <div className="space-y-1.5 lg:col-span-1">
+              <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Depart</label>
               <input 
                 type="date"
-                className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none font-bold text-slate-800 focus:ring-2 focus:ring-blue-500 transition-all"
+                className="w-full bg-slate-50 border border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl outline-none font-bold text-slate-800 text-sm"
                 value={params.date}
                 min={new Date().toISOString().split('T')[0]}
                 onChange={e => setParams({...params, date: e.target.value})}
@@ -218,11 +216,11 @@ export const SearchForm: React.FC<SearchFormProps> = ({ params, setParams, onSea
             </div>
 
             {params.tripType === 'ROUND_TRIP' && (
-              <div className="space-y-2 text-left lg:col-span-1 animate-in fade-in slide-in-from-left-2 duration-300">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Return</label>
+              <div className="space-y-1.5 lg:col-span-1">
+                <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Return</label>
                 <input 
                   type="date"
-                  className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none font-bold text-slate-800 focus:ring-2 focus:ring-blue-500 transition-all"
+                  className="w-full bg-slate-50 border border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl outline-none font-bold text-slate-800 text-sm"
                   value={params.returnDate}
                   min={params.date}
                   onChange={e => setParams({...params, returnDate: e.target.value})}
@@ -231,21 +229,20 @@ export const SearchForm: React.FC<SearchFormProps> = ({ params, setParams, onSea
             )}
 
             <div className={`grid grid-cols-2 gap-2 ${params.tripType === 'ONE_WAY' ? 'lg:col-span-2' : 'lg:col-span-1'}`}>
-              <div className="space-y-2 text-left">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Pax</label>
+              <div className="space-y-1.5">
+                <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Pax</label>
                 <input 
                   type="number"
                   min="1"
-                  max="10"
-                  className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none font-bold text-slate-800"
+                  className="w-full bg-slate-50 border border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl outline-none font-bold text-slate-800"
                   value={params.passengers}
                   onChange={e => setParams({...params, passengers: parseInt(e.target.value) || 1})}
                 />
               </div>
-              <div className="space-y-2 text-left">
-                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Class</label>
+              <div className="space-y-1.5">
+                <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest block">Class</label>
                 <select 
-                  className="w-full bg-slate-50 border border-slate-200 p-4 rounded-2xl outline-none font-bold text-slate-800 appearance-none"
+                  className="w-full bg-slate-50 border border-slate-200 p-3 md:p-4 rounded-xl md:rounded-2xl outline-none font-bold text-slate-800 text-sm"
                   value={params.cabinClass}
                   onChange={e => setParams({...params, cabinClass: e.target.value as any})}
                 >
@@ -257,8 +254,8 @@ export const SearchForm: React.FC<SearchFormProps> = ({ params, setParams, onSea
               </div>
             </div>
 
-            <Button type="submit" size="xl" className="w-full h-[60px] group lg:col-span-1">
-              <Icons.Search /> <span className="ml-2">SEARCH</span>
+            <Button type="submit" size="lg" className="w-full h-[52px] md:h-[60px] lg:col-span-1">
+              SEARCH
             </Button>
           </div>
         )}

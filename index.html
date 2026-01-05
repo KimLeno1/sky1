@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>SkyNet - Premium Flight & Travel Experience</title>
     <meta name="description" content="Discover premium routes, luxury stays, and seamless travel management with SkyNet's next-generation booking platform.">
     
@@ -38,6 +38,8 @@
         scroll-behavior: smooth;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        touch-action: manipulation; /* Prevents double-tap zoom delay on buttons */
+        overflow-x: hidden;
       }
 
       /* Custom Utilities */
@@ -49,7 +51,8 @@
       }
 
       .custom-scrollbar::-webkit-scrollbar {
-        width: 8px;
+        width: 6px;
+        height: 6px;
       }
       .custom-scrollbar::-webkit-scrollbar-track {
         background: transparent;
@@ -57,12 +60,22 @@
       .custom-scrollbar::-webkit-scrollbar-thumb {
         background: #cbd5e1;
         border-radius: 20px;
-        border: 2px solid #f8fafc;
       }
       .custom-scrollbar::-webkit-scrollbar-thumb:hover {
         background: #94a3b8;
       }
       
+      /* Mobile optimization: hide scrollbars for cleaner touch look if desired */
+      @media (max-width: 768px) {
+        .hide-scrollbar-mobile::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar-mobile {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      }
+
       /* Smooth Animations */
       @keyframes float {
         0%, 100% { transform: translateY(0); }
@@ -82,16 +95,27 @@
 
       /* Loader */
       .spinner {
-        width: 40px;
-        height: 40px;
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid var(--sky-blue);
+        width: 30px;
+        height: 30px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid var(--sky-blue);
         border-radius: 50%;
         animation: spin 1s linear infinite;
       }
       @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
+      }
+
+      /* Prevent input zoom on iOS */
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+      
+      @media (min-width: 1024px) {
+        input, select, textarea {
+          font-size: 14px !important;
+        }
       }
     </style>
   <link rel="stylesheet" href="/index.css">

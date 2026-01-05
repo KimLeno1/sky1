@@ -4,6 +4,8 @@ import { Hotel, Flight, SearchParams, FlightSearchResponse } from "../types.ts";
 import { AIRLINES } from "./mockData.ts";
 import { HOTEL_PHOTOS } from "./extraMockData.ts";
 
+const PRICE_MULTIPLIER = 1.0;
+
 /**
  * Robust JSON extraction with fallback for grounding text noise and markdown blocks.
  */
@@ -34,7 +36,6 @@ export const fetchRealFlights = async (params: SearchParams): Promise<FlightSear
 
   try {
     const ai = new GoogleGenAI({ apiKey });
-    // Use flash-preview for faster search-grounded lookups
     const modelName = "gemini-3-flash-preview";
     
     const prompt = `SEARCH TASK: Find real, current flight schedules and pricing.
@@ -53,14 +54,12 @@ export const fetchRealFlights = async (params: SearchParams): Promise<FlightSear
       contents: { parts: [{ text: prompt }] },
       config: {
         tools: [{ googleSearch: {} }],
-        temperature: 0.1, // Lower temperature for more structured adherence
+        temperature: 0.1,
       },
     });
 
     const textOutput = response.text;
     const results = extractJson(textOutput);
-    
-    // Extract grounding chunks for source transparency
     const sources = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
 
     if (!results || results.length === 0) {
@@ -73,12 +72,10 @@ export const fetchRealFlights = async (params: SearchParams): Promise<FlightSear
         a.name.toLowerCase().includes(f.airline?.toLowerCase())
       );
       
-      // Enforce markup and basic validation
-      const basePrice = Number(f.price) || 299;
-      const finalPrice = Math.floor(basePrice * 1.44);
+      const finalPrice = Math.floor((Number(f.price) || 299) * PRICE_MULTIPLIER);
 
       return {
-        id: `${airlineMatch?.code || 'FL'}${Math.floor(100 + Math.random() * 899)}`,
+        id: f.flightNumber || `${airlineMatch?.code || 'FL'}${Math.floor(100 + Math.random() * 899)}`,
         airline: f.airline || "SkyNet Partner",
         logo: airlineMatch?.logo || `https://ui-avatars.com/api/?name=${encodeURIComponent(f.airline || "FL")}&background=f1f5f9&color=64748b&bold=true`,
         departureAirport: params.origin,
@@ -134,7 +131,7 @@ export const fetchRealHotels = async (city: string): Promise<Hotel[]> => {
     const results = JSON.parse(response.text || "[]");
     return results.map((h: any, i: number) => ({
       ...h,
-      pricePerNight: Math.floor((h.pricePerNight || 200) * 1.44),
+      pricePerNight: Math.floor((h.pricePerNight || 200) * PRICE_MULTIPLIER),
       image: HOTEL_PHOTOS[i % HOTEL_PHOTOS.length]
     }));
   } catch (error) {

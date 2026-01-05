@@ -115,60 +115,49 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExit }) => {
 
   if (!isAdminAuthenticated) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6 font-sans">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 rounded-full blur-[120px]"></div>
-        </div>
-
-        <div className="relative z-10 w-full max-w-md bg-white/5 backdrop-blur-3xl border border-white/10 p-12 rounded-[48px] shadow-2xl space-y-8 animate-in zoom-in-95 duration-500">
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-6">
+        <div className="relative z-10 w-full max-w-md bg-white/5 backdrop-blur-3xl border border-white/10 p-8 md:p-12 rounded-[32px] md:rounded-[48px] shadow-2xl space-y-6 md:space-y-8 animate-in zoom-in-95 duration-500">
           <div className="text-center space-y-4">
-            <div className={`w-20 h-20 bg-blue-600/20 text-blue-500 rounded-3xl flex items-center justify-center mx-auto mb-6 text-3xl border border-blue-500/30 transition-all ${loginError ? 'bg-red-500/20 text-red-500 border-red-500/50 animate-bounce' : ''}`}>
+            <div className={`w-16 h-16 md:w-20 md:h-20 bg-blue-600/20 text-blue-500 rounded-3xl flex items-center justify-center mx-auto mb-6 text-3xl border border-blue-500/30 transition-all ${loginError ? 'bg-red-500/20 text-red-500' : ''}`}>
               <Icons.Shield />
             </div>
-            <h1 className="text-3xl font-black text-white tracking-tighter uppercase">Security Clearance</h1>
-            <p className="text-slate-500 font-mono text-[10px] tracking-[0.3em] uppercase">SkyNet Command Center Access</p>
+            <h1 className="text-2xl md:text-3xl font-black text-white tracking-tighter uppercase">Admin Entry</h1>
           </div>
 
           <form onSubmit={handleAdminLogin} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Admin Identifier</label>
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Identifier</label>
               <input 
                 type="email"
                 required
-                className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 font-bold text-white transition-all"
-                placeholder="EMAIL ADDRESS"
+                className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 font-bold text-white transition-all"
+                placeholder="EMAIL"
                 value={adminEmail}
                 onChange={e => setAdminEmail(e.target.value)}
               />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Access Code</label>
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Code</label>
               <input 
                 type="password"
                 required
-                className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 font-bold text-white transition-all"
+                className="w-full bg-white/5 border border-white/10 p-4 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 font-bold text-white transition-all"
                 placeholder="••••"
                 value={adminPass}
                 onChange={e => setAdminPass(e.target.value)}
               />
             </div>
 
-            {loginError && (
-              <p className="text-[10px] font-black text-red-500 text-center uppercase tracking-widest animate-pulse">
-                Invalid Credentials. Entry Logged.
-              </p>
-            )}
-
-            <div className="pt-4 flex flex-col gap-4">
-              <Button type="submit" size="xl" className="w-full shadow-2xl shadow-blue-500/20">
-                INITIATE PROTOCOL
+            <div className="pt-4 flex flex-col gap-3">
+              <Button type="submit" size="lg" className="w-full">
+                ACCESS
               </Button>
               <button 
                 type="button"
                 onClick={onExit}
                 className="text-slate-600 text-[10px] font-black uppercase tracking-widest hover:text-white transition-colors"
               >
-                Abort & Return Home
+                Return
               </button>
             </div>
           </form>
@@ -178,197 +167,124 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onExit }) => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-300 p-12 font-sans animate-in fade-in duration-700">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <div className="min-h-screen bg-slate-950 text-slate-300 p-4 md:p-12 animate-in fade-in duration-700">
+      <div className="max-w-7xl mx-auto space-y-8 md:space-y-12">
         
         {/* Header */}
-        <div className="flex justify-between items-end border-b border-white/10 pb-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-white/10 pb-6 md:pb-8 gap-6">
           <div>
-            <h1 className="text-4xl font-black text-white tracking-tighter uppercase">SkyNet <span className="text-blue-500">Master Console</span></h1>
-            <p className="text-slate-500 font-mono text-xs mt-2 tracking-widest">
-              LOGGED IN AS: <span className="text-blue-400 font-bold">{adminEmail}</span> | SESSION: OMEGA-SECURE
+            <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase">Console</h1>
+            <p className="text-slate-500 font-mono text-[10px] md:text-xs mt-2 tracking-widest uppercase">
+              Admin: <span className="text-blue-400">{adminEmail}</span>
             </p>
           </div>
-          <div className="flex gap-4">
-            <Button variant="ghost" onClick={() => setIsAdminAuthenticated(false)} className="text-slate-500 hover:text-white">
-              LOGOUT
-            </Button>
-            <Button variant="outline" onClick={onExit} className="border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white">
-              EXIT ADMIN MODE
+          <div className="flex gap-2 w-full md:w-auto">
+            <Button variant="outline" size="sm" onClick={onExit} className="flex-1 border-blue-500 text-blue-500">
+              EXIT
             </Button>
           </div>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white/5 border border-white/10 p-8 rounded-[32px] space-y-2 group hover:bg-white/10 transition-all">
-            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Gross Revenue</p>
-            <p className="text-4xl font-black text-emerald-500 tracking-tighter">${totalRevenue.toLocaleString()}</p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="bg-white/5 border border-white/10 p-5 md:p-8 rounded-2xl md:rounded-[32px] space-y-1">
+            <p className="text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest">Revenue</p>
+            <p className="text-xl md:text-3xl font-black text-emerald-500">${totalRevenue.toLocaleString()}</p>
           </div>
-          <div className="bg-white/5 border border-white/10 p-8 rounded-[32px] space-y-2 group hover:bg-white/10 transition-all">
-            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Active Bookings</p>
-            <p className="text-4xl font-black text-blue-500 tracking-tighter">{txns.length}</p>
+          <div className="bg-white/5 border border-white/10 p-5 md:p-8 rounded-2xl md:rounded-[32px] space-y-1">
+            <p className="text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest">Trips</p>
+            <p className="text-xl md:text-3xl font-black text-blue-500">{txns.length}</p>
           </div>
-          <div className="bg-white/5 border border-white/10 p-8 rounded-[32px] space-y-2 group hover:bg-white/10 transition-all">
-            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">System Users</p>
-            <p className="text-4xl font-black text-white tracking-tighter">{users.length}</p>
+          <div className="bg-white/5 border border-white/10 p-5 md:p-8 rounded-2xl md:rounded-[32px] space-y-1">
+            <p className="text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest">Users</p>
+            <p className="text-xl md:text-3xl font-black text-white">{users.length}</p>
           </div>
-          <div className="bg-white/5 border border-white/10 p-8 rounded-[32px] space-y-2 group hover:bg-white/10 transition-all">
-            <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Secure Card Vault</p>
-            <p className="text-4xl font-black text-amber-500 tracking-tighter">{cards.length}</p>
+          <div className="bg-white/5 border border-white/10 p-5 md:p-8 rounded-2xl md:rounded-[32px] space-y-1">
+            <p className="text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-widest">Vault</p>
+            <p className="text-xl md:text-3xl font-black text-amber-500">{cards.length}</p>
           </div>
         </div>
 
-        {/* Data View */}
-        <div className="bg-white/5 border border-white/10 rounded-[48px] overflow-hidden shadow-2xl">
-          <div className="flex justify-between items-center border-b border-white/10 p-4 bg-white/5">
-            <div className="flex overflow-x-auto">
-              <button 
-                onClick={() => setActiveTab('TX')}
-                className={`px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'TX' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}
-              >
-                Transactions
-              </button>
-              <button 
-                onClick={() => setActiveTab('USERS')}
-                className={`px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'USERS' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}
-              >
-                User Accounts
-              </button>
-              <button 
-                onClick={() => setActiveTab('CARDS')}
-                className={`px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'CARDS' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}
-              >
-                Master Card Vault
-              </button>
-            </div>
-            
-            <div className="flex gap-2">
-              {activeTab === 'TX' && (
-                <Button size="sm" onClick={exportTransactionsAsTxt} className="bg-emerald-600 hover:bg-emerald-700">
-                  EXPORT LOGS (.TXT)
-                </Button>
-              )}
-              {activeTab === 'CARDS' && (
-                <Button size="sm" onClick={exportVaultAsTxt} className="bg-emerald-600 hover:bg-emerald-700">
-                  EXPORT VAULT (.TXT)
-                </Button>
-              )}
-            </div>
-          </div>
+        {/* Tab Controls */}
+        <div className="flex gap-2 bg-white/5 p-1 rounded-2xl border border-white/10">
+          <button onClick={() => setActiveTab('TX')} className={`flex-1 py-3 md:py-4 rounded-xl text-[8px] md:text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'TX' ? 'bg-blue-600 text-white' : 'text-slate-500'}`}>TXNS</button>
+          <button onClick={() => setActiveTab('USERS')} className={`flex-1 py-3 md:py-4 rounded-xl text-[8px] md:text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'USERS' ? 'bg-blue-600 text-white' : 'text-slate-500'}`}>USERS</button>
+          <button onClick={() => setActiveTab('CARDS')} className={`flex-1 py-3 md:py-4 rounded-xl text-[8px] md:text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === 'CARDS' ? 'bg-blue-600 text-white' : 'text-slate-500'}`}>VAULT</button>
+        </div>
 
-          <div className="p-8 max-h-[600px] overflow-y-auto custom-scrollbar">
+        {/* Mobile-friendly Data View */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-[48px] overflow-hidden shadow-2xl">
+          <div className="p-4 md:p-8">
             {activeTab === 'TX' && (
-              <table className="w-full text-left text-sm font-mono">
-                <thead className="text-[10px] uppercase text-slate-500 border-b border-white/5">
-                  <tr>
-                    <th className="pb-4 px-4">TX ID</th>
-                    <th className="pb-4 px-4">Route</th>
-                    <th className="pb-4 px-4">Amount</th>
-                    <th className="pb-4 px-4">Cardholder</th>
-                    <th className="pb-4 px-4">Card Details</th>
-                    <th className="pb-4 px-4">Timestamp</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {txns.length === 0 ? (
-                    <tr><td colSpan={6} className="py-20 text-center text-slate-600 uppercase tracking-widest font-sans">No transactions recorded in system logs</td></tr>
-                  ) : txns.map(t => (
-                    <tr key={t.id} className="hover:bg-white/5 transition-colors">
-                      <td className="py-4 px-4 text-blue-400">{t.id}</td>
-                      <td className="py-4 px-4 text-white uppercase">{t.route}</td>
-                      <td className="py-4 px-4 text-emerald-400 font-black">${t.amount}</td>
-                      <td className="py-4 px-4 uppercase">{t.cardholderName}</td>
-                      <td className="py-4 px-4 text-[10px]">
-                        <span className="text-slate-400">{t.cardType}</span><br/>
-                        <span className="text-white">{t.cardNumber}</span><br/>
-                        <span className="text-slate-500">EXP: {t.expiry} | CVV: {t.cvv}</span>
-                      </td>
-                      <td className="py-4 px-4 text-slate-500">{new Date(t.timestamp).toLocaleString()}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="space-y-4">
+                {txns.length === 0 ? (
+                  <p className="py-12 text-center text-[10px] font-black text-slate-600 uppercase">No Data</p>
+                ) : (
+                  txns.map(t => (
+                    <div key={t.id} className="bg-white/5 p-4 rounded-xl border border-white/5 space-y-2">
+                      <div className="flex justify-between items-start">
+                        <span className="text-blue-400 font-mono text-[10px]">{t.id}</span>
+                        <span className="text-emerald-500 font-black text-xs">${t.amount}</span>
+                      </div>
+                      <p className="text-white text-[10px] font-black uppercase">{t.route}</p>
+                      <div className="flex justify-between items-end text-[9px] text-slate-500 uppercase">
+                        <span>{t.cardholderName}</span>
+                        <span>{new Date(t.timestamp).toLocaleDateString()}</span>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             )}
 
             {activeTab === 'USERS' && (
-              <table className="w-full text-left text-sm font-mono">
-                <thead className="text-[10px] uppercase text-slate-500 border-b border-white/5">
-                  <tr>
-                    <th className="pb-4 px-4">User ID</th>
-                    <th className="pb-4 px-4">Full Name</th>
-                    <th className="pb-4 px-4">Email</th>
-                    <th className="pb-4 px-4">Tier</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {users.length === 0 ? (
-                    <tr><td colSpan={4} className="py-20 text-center text-slate-600 uppercase tracking-widest font-sans">No registered accounts found</td></tr>
-                  ) : users.map(u => (
-                    <tr key={u.id} className="hover:bg-white/5 transition-colors">
-                      <td className="py-4 px-4 text-blue-400">{u.id}</td>
-                      <td className="py-4 px-4 text-white uppercase">{u.firstName} {u.lastName}</td>
-                      <td className="py-4 px-4 lowercase">{u.email}</td>
-                      <td className="py-4 px-4">
-                        <span className={`px-2 py-1 rounded bg-white/5 text-[10px] font-black uppercase ${u.memberStatus === 'Platinum' ? 'text-blue-400' : 'text-slate-400'}`}>
-                          {u.memberStatus}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="space-y-4">
+                {users.length === 0 ? (
+                  <p className="py-12 text-center text-[10px] font-black text-slate-600 uppercase">No Data</p>
+                ) : (
+                  users.map(u => (
+                    <div key={u.id} className="bg-white/5 p-4 rounded-xl border border-white/5 flex justify-between items-center">
+                      <div>
+                        <p className="text-white text-[10px] font-black uppercase">{u.firstName} {u.lastName}</p>
+                        <p className="text-slate-500 text-[9px] font-mono lowercase">{u.email}</p>
+                      </div>
+                      <span className="text-[8px] font-black bg-white/10 px-2 py-1 rounded uppercase">{u.memberStatus}</span>
+                    </div>
+                  ))
+                )}
+              </div>
             )}
 
             {activeTab === 'CARDS' && (
-              <table className="w-full text-left text-sm font-mono">
-                <thead className="text-[10px] uppercase text-slate-500 border-b border-white/5">
-                  <tr>
-                    <th className="pb-4 px-4">Card ID</th>
-                    <th className="pb-4 px-4">Full Number</th>
-                    <th className="pb-4 px-4">Cardholder</th>
-                    <th className="pb-4 px-4">Exp</th>
-                    <th className="pb-4 px-4">CVV</th>
-                    <th className="pb-4 px-4">Type</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {cards.length === 0 ? (
-                    <tr><td colSpan={6} className="py-20 text-center text-slate-600 uppercase tracking-widest font-sans">Vault is empty</td></tr>
-                  ) : cards.map(c => (
-                    <tr key={c.id} className="hover:bg-white/5 transition-colors">
-                      <td className="py-4 px-4 text-blue-400 text-[10px]">{c.id}</td>
-                      <td className="py-4 px-4 text-white tracking-widest">{c.cardNumber}</td>
-                      <td className="py-4 px-4 uppercase">{c.cardholderName}</td>
-                      <td className="py-4 px-4">{c.expiry}</td>
-                      <td className="py-4 px-4 text-blue-500 font-bold">{c.cvv}</td>
-                      <td className="py-4 px-4">
+              <div className="space-y-4">
+                {cards.length === 0 ? (
+                  <p className="py-12 text-center text-[10px] font-black text-slate-600 uppercase">No Data</p>
+                ) : (
+                  cards.map(c => (
+                    <div key={c.id} className="bg-white/5 p-4 rounded-xl border border-white/5 space-y-2">
+                      <p className="text-white font-mono text-xs tracking-widest">{c.cardNumber}</p>
+                      <div className="flex justify-between text-[9px] text-slate-500 uppercase">
+                        <span>{c.cardholderName}</span>
                         <span className="text-blue-400 font-black">{c.cardType}</span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
             )}
           </div>
         </div>
 
-        {/* System Tools */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8 bg-white/5 p-10 rounded-[32px] border border-white/10">
-          <div>
-            <h3 className="text-xl font-black text-white uppercase tracking-tighter">Emergency Purge Controls</h3>
-            <p className="text-slate-500 text-[10px] uppercase font-bold tracking-widest mt-1">Authorized personnel only. Logs are maintained permanently.</p>
-          </div>
-          <div className="flex flex-wrap gap-4">
-            <Button variant="outline" onClick={clearTransactions} className="border-red-500/30 text-red-500 hover:bg-red-500 hover:text-white transition-all">
-              WIPE ALL TRANSACTION LOGS
-            </Button>
-            <Button variant="outline" onClick={clearCards} className="border-red-500/30 text-red-500 hover:bg-red-500 hover:text-white transition-all">
-              PURGE ENTIRE SECURE VAULT
-            </Button>
-          </div>
+        {/* Actions */}
+        <div className="flex flex-col md:flex-row gap-4">
+          {activeTab === 'TX' && txns.length > 0 && (
+            <Button size="md" onClick={exportTransactionsAsTxt} className="w-full bg-emerald-600">DOWNLOAD LOGS</Button>
+          )}
+          {activeTab === 'CARDS' && cards.length > 0 && (
+            <Button size="md" onClick={exportVaultAsTxt} className="w-full bg-emerald-600">DOWNLOAD VAULT</Button>
+          )}
+          <Button variant="outline" size="md" onClick={clearTransactions} className="w-full border-red-900/40 text-red-500">WIPE ALL</Button>
         </div>
-
       </div>
     </div>
   );
